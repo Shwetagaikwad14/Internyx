@@ -21,7 +21,7 @@ export default function Navbar() {
         </Link>
       ) : (
         <Link to="/login" className="nav-btn">
-          Login
+          Sign in
         </Link>
       )}
     </header>
