@@ -34,15 +34,16 @@ export default function Register() {
               <label>Full Name</label>
               <input type="text" placeholder="Full Name" required />
 
+               <label>Mobile No</label>
+              <input type="password" placeholder="Mobile" required />
+
               <label>Email Address</label>
               <input type="email" placeholder="Email Address" required />
 
               <label>Password</label>
               <input type="password" placeholder="Password" required />
 
-              <label>Confirm Password</label>
-              <input type="password" placeholder="Confirm Password" required />
-
+              
               <label className="checkbox-label terms">
                 <input type="checkbox" required />
                 <span>

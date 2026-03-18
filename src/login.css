@@ -51,7 +51,24 @@ a {
   font-weight: 700;
   letter-spacing: 0.3px;
 }
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.logo-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: white;
+}
 .nav-links {
   display: flex;
   gap: 34px;
@@ -463,4 +480,24 @@ a {
   .submit-btn {
     font-size: 1.05rem;
   }
+}
+
+.demo-otp-text {
+  text-align: center;
+  color: #304c86;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.resend-btn {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #2f6bff;
+  border-radius: 12px;
+  background: white;
+  color: #2f6bff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
 }
