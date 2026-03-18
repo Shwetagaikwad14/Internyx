@@ -1,13 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import authImage from "../assets/loginpic.png";
 
-
 export default function Login() {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const [mobile, setMobile] = useState("");
+  const [otp, setOtp] = useState("");
+  const [generatedOtp, setGeneratedOtp] = useState("");
+  const [showOtpBox, setShowOtpBox] = useState(false);
+
+  const handleSendOtp = (e) => {
     e.preventDefault();
-    alert("Login form submitted");
+
+    if (mobile.length !== 10) {
+      alert("Please enter a valid 10-digit mobile number");
+      return;
+    }
+
+    const randomOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedOtp(randomOtp);
+    setShowOtpBox(true);
+
+    alert(`Demo OTP is: ${randomOtp}`);
+  };
+
+  const handleVerifyOtp = (e) => {
+    e.preventDefault();
+
+    if (otp === generatedOtp) {
+      alert("OTP verified successfully ✅");
+      navigate("/"); // direct Home page
+    } else {
+      alert("Invalid OTP ❌");
+    }
   };
 
   return (
@@ -29,26 +56,50 @@ export default function Login() {
         <div className="auth-right">
           <div className="auth-card">
             <h1>Welcome Back!</h1>
-            <p>Login to Your Account</p>
+            <p>Login with Mobile OTP</p>
 
-            <form className="auth-form" onSubmit={handleSubmit}>
-              <label>Email Address</label>
-              <input type="email" placeholder="Email Address" required />
+            {!showOtpBox ? (
+              <form className="auth-form" onSubmit={handleSendOtp}>
+                <label>Mobile Number</label>
+                <input
+                  type="tel"
+                  placeholder="Enter 10-digit mobile number"
+                  value={mobile}
+                  onChange={(e) =>
+                    setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))
+                  }
+                  required
+                />
 
-              <label>Password</label>
-              <input type="password" placeholder="Password" required />
+                <button type="submit" className="submit-btn">
+                  Send OTP
+                </button>
+              </form>
+            ) : (
+              <form className="auth-form" onSubmit={handleVerifyOtp}>
+                <label>Mobile Number</label>
+                <input type="tel" value={mobile} disabled />
 
-              <div className="remember-row">
-                <label className="checkbox-label">
-                  <input type="checkbox" />
-                  <span>Remember Me</span>
-                </label>
-              </div>
+                <label>Enter OTP</label>
+                <input
+                  type="text"
+                  placeholder="Enter 6-digit OTP"
+                  value={otp}
+                  onChange={(e) =>
+                    setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                  }
+                  required
+                />
 
-              <button type="submit" className="submit-btn">
-                Login
-              </button>
-            </form>
+                <p className="demo-otp-text">
+                  Demo OTP: <strong>{generatedOtp}</strong>
+                </p>
+
+                <button type="submit" className="submit-btn">
+                  Verify OTP
+                </button>
+              </form>
+            )}
 
             <div className="bottom-text">
               Don&apos;t have an account? <Link to="/register">Sign Up</Link>
