@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import "./Internships.css";
 import Navbar from "../components/Navbar";
 import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
