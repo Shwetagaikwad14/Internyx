@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import About from "./pages/About";
 import Testimonials from "./pages/Testimonials";
+import Internships from "./pages/Internships";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/about" element={<About />} />
       <Route path="/testimonials" element={<Testimonials />} />
+      <Route path="/internships" element={<Internships />} />
     </Routes>
   );
 }
