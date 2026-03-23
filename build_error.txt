@@ -1,0 +1,63 @@
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32m✓[39m 13 modules transformed.
+[31m✗[39m Build failed in 255ms
+[31merror during build:
+[31m[vite:esbuild] Transform failed with 5 errors:
+C:/Users/ASUS/OneDrive/internyx/Internyx/src/pages/Home.jsx:6:9: ERROR: The symbol "FaRegBookmark" has already been declared
+C:/Users/ASUS/OneDrive/internyx/Internyx/src/pages/Home.jsx:6:24: ERROR: The symbol "FaFacebookF" has already been declared
+C:/Users/ASUS/OneDrive/internyx/Internyx/src/pages/Home.jsx:6:37: ERROR: The symbol "FaInstagram" has already been declared
+C:/Users/ASUS/OneDrive/internyx/Internyx/src/pages/Home.jsx:6:50: ERROR: The symbol "FaTwitter" has already been declared
+C:/Users/ASUS/OneDrive/internyx/Internyx/src/pages/Home.jsx:6:61: ERROR: The symbol "FaLinkedinIn" has already been declared[31m
+file: [36mC:/Users/ASUS/OneDrive/internyx/Internyx/src/pages/Home.jsx:6:9[31m
+[33m
+[33mThe symbol "FaRegBookmark" has already been declared[33m
+4  |  import Navbar from "../components/Navbar";
+5  |  import heroImg from "../assets/internshp.jpeg";
+6  |  import { FaRegBookmark, FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+   |           ^
+7  |  
+8  |  const liveProjects = [
+
+[33mThe symbol "FaFacebookF" has already been declared[33m
+4  |  import Navbar from "../components/Navbar";
+5  |  import heroImg from "../assets/internshp.jpeg";
+6  |  import { FaRegBookmark, FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+   |                          ^
+7  |  
+8  |  const liveProjects = [
+
+[33mThe symbol "FaInstagram" has already been declared[33m
+4  |  import Navbar from "../components/Navbar";
+5  |  import heroImg from "../assets/internshp.jpeg";
+6  |  import { FaRegBookmark, FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+   |                                       ^
+7  |  
+8  |  const liveProjects = [
+
+[33mThe symbol "FaTwitter" has already been declared[33m
+4  |  import Navbar from "../components/Navbar";
+5  |  import heroImg from "../assets/internshp.jpeg";
+6  |  import { FaRegBookmark, FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+   |                                                    ^
+7  |  
+8  |  const liveProjects = [
+
+[33mThe symbol "FaLinkedinIn" has already been declared[33m
+4  |  import Navbar from "../components/Navbar";
+5  |  import heroImg from "../assets/internshp.jpeg";
+6  |  import { FaRegBookmark, FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
+   |                                                               ^
+7  |  
+8  |  const liveProjects = [
+[31m
+    at failureErrorWithLog (C:\Users\ASUS\OneDrive\internyx\Internyx\node_modules\esbuild\lib\main.js:1748:15)
+    at C:\Users\ASUS\OneDrive\internyx\Internyx\node_modules\esbuild\lib\main.js:1017:50
+    at responseCallbacks.<computed> (C:\Users\ASUS\OneDrive\internyx\Internyx\node_modules\esbuild\lib\main.js:884:9)
+    at handleIncomingPacket (C:\Users\ASUS\OneDrive\internyx\Internyx\node_modules\esbuild\lib\main.js:939:12)
+    at Socket.readFromStdout (C:\Users\ASUS\OneDrive\internyx\Internyx\node_modules\esbuild\lib\main.js:862:7)
+    at Socket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:559:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+    at Readable.push (node:internal/streams/readable:390:5)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)[39m

@@ -4,6 +4,7 @@ import "./Home.css";
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/internshp.jpeg";
 
+
 const liveProjects = [
   {
     title: "E-Commerce Website",
@@ -67,6 +68,7 @@ const testimonials = [
 
 export default function Home() {
   const currentYear = new Date().getFullYear();
+
   return (
     <div className="home-page">
       <Navbar showLinks={true} />
