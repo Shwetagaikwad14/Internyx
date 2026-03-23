@@ -122,7 +122,7 @@ export default function About() {
                 </li>
                 <li>
                   <span className="contact-icon">📞</span>
-                  Phone: +91 9876543210
+                  Phone: +91 1234567890
                 </li>
                 <li>
                   <span className="contact-icon">📍</span>
