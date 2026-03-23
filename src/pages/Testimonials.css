@@ -1,0 +1,265 @@
+.testimonials-page {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fc;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main Section */
+.testimonials-main {
+  flex: 1;
+  padding: 1rem 1rem 6rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 2; /* To sit above wave nicely */
+}
+
+.testimonials-title {
+  color: #1e3a8a;
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 4rem;
+}
+
+/* Carousel Layout */
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.carousel-arrow {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  color: #1d4ed8;
+  font-size: 1.25rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
+}
+
+.carousel-arrow:hover {
+  background: #f1f5f9;
+}
+
+.cards-wrapper {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  /* Hide scrollbar */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.cards-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Testimonial Card */
+.testimonial-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  width: 340px;
+  min-width: 300px;
+  text-align: left;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin-right: 1.25rem;
+}
+
+.blob-bg {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background-color: #3b82f6;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  z-index: 1;
+}
+
+.avatar-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  z-index: 2;
+  background-color: #e5e7eb;
+}
+
+.user-details h3 {
+  color: #1e3a8a;
+  font-size: 1.25rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.stars-container {
+  display: flex;
+  gap: 2px;
+}
+
+.star {
+  font-size: 1rem;
+}
+
+.star.full { color: #facc15; }
+.star.half { color: #facc15; }
+.star.empty { color: #e5e7eb; }
+
+.card-text {
+  color: #4b5563;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0 0 2rem 0;
+  flex-grow: 1;
+}
+
+/* Card Footer */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Pushes footer to the bottom */
+  padding-top: 2rem; /* Added more gap as requested */
+  border-top: 1px solid #f3f4f6;
+  width: 100%;
+}
+
+.card-author {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.apply-btn {
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.apply-btn:hover {
+  background-color: #bfdbfe;
+}
+
+/* Dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #d1d5db;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #3b82f6;
+}
+
+/* Footer completely matching design */
+.testimonials-footer {
+  background-color: #f8f9fc;
+  border-top: 1px solid #e5e7eb;
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-left p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-icon {
+  border: 1px solid #6b7280;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  color: #9ca3af;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 1.1rem;
+  color: #374151;
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .cards-wrapper {
+    overflow-x: scroll;
+    padding-bottom: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-arrow {
+    display: none;
+  }
+  
+  .testimonials-footer {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+  }
+}
