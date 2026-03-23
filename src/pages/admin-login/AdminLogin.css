@@ -1,0 +1,227 @@
+.admin-auth-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #f3f4f6 0%, #ffffff 45%, #ffffff 100%);
+  overflow-x: hidden;
+}
+
+/* MAIN SPLIT LAYOUT */
+.admin-auth-split {
+  display: flex;
+  min-height: calc(100vh - 78px); 
+}
+
+/* LEFT SIDE */
+.admin-auth-left {
+  flex: 1;
+  /* Darker admin theme */
+  background: linear-gradient(135deg, #0453c1, #2b5ba8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-auth-left::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  right: -100px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.admin-auth-left::after {
+  content: "";
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  bottom: -120px;
+  left: -80px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.admin-auth-left-content {
+  max-width: 520px;
+  color: white;
+  text-align: left;
+  position: relative;
+  z-index: 2;
+}
+
+.admin-auth-left-content h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 18px;
+  color: #d9dada;
+}
+
+.admin-auth-left-content p {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #e5e7eb;
+  margin-bottom: 26px;
+}
+
+.admin-auth-left-content img {
+  width: 100%;
+  max-width: 470px;
+  display: block;
+  margin-top: 12px;
+  object-fit: contain;
+}
+
+/* RIGHT SIDE */
+.admin-auth-right {
+  flex: 1;
+  background: linear-gradient(to bottom, #f3f4f6 0%, #ffffff 45%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.admin-auth-card {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 22px;
+  padding: 42px 48px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.admin-auth-card h1 {
+  text-align: center;
+  font-size: 3rem;
+  color: #1f2937;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.admin-auth-card p {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #4b5563;
+  margin-bottom: 28px;
+}
+
+.admin-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-auth-form label {
+  font-size: 1.2rem;
+  color: #1f2937;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.admin-auth-form input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  outline: none;
+  font-size: 1rem;
+  color: #1f2937;
+  background: #ffffff;
+  transition: 0.3s ease;
+}
+
+.admin-auth-form input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.admin-auth-form input::placeholder {
+  color: #9ca3af;
+}
+
+/* BUTTON */
+.admin-submit-btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #1f2937, #374151);
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(31, 41, 55, 0.25);
+  transition: 0.3s ease;
+}
+
+.admin-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(31, 41, 55, 0.3);
+}
+
+.demo-credentials-text {
+  text-align: center;
+  color: #4b5563;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .admin-auth-left-content h2 {
+    font-size: 2.5rem;
+  }
+  .admin-auth-left-content p {
+    font-size: 1.05rem;
+  }
+  .admin-auth-left-content img {
+    max-width: 400px;
+  }
+  .admin-auth-card h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .admin-auth-split {
+    flex-direction: column;
+  }
+  .admin-auth-left, .admin-auth-right {
+    width: 100%;
+  }
+  .admin-auth-left {
+    min-height: 420px;
+    padding: 40px 20px;
+  }
+  .admin-auth-left-content {
+    text-align: center;
+  }
+  .admin-auth-left-content h2 {
+    font-size: 2.2rem;
+  }
+  .admin-auth-left-content img {
+    margin: 20px auto 0;
+  }
+  .admin-auth-card {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-auth-card h1 {
+    font-size: 2.1rem;
+  }
+  .admin-auth-form label {
+    font-size: 1rem;
+  }
+  .admin-submit-btn {
+    font-size: 1.2rem;
+  }
+}

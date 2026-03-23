@@ -1,4 +1,5 @@
 import React from "react";
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import "./Home.css";
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/internshp.jpeg";
@@ -59,6 +60,7 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const currentYear = new Date().getFullYear();
   return (
     <div className="home-page">
       <Navbar showLinks={true} />
@@ -186,15 +188,25 @@ export default function Home() {
           <div>
             <h4>Social Media</h4>
             <div className="social-icons">
-              <span>📘</span>
-              <span>📸</span>
-              <span>🐦</span>
-              <span>💼</span>
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                <FaFacebookF />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                <FaTwitter />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                <FaLinkedinIn />
+              </a>
             </div>
           </div>
         </div>
 
-        <div className="footer-bottom">© 2024 Internyx. All rights reserved.</div>
+        <div className="footer-bottom">
+          © {currentYear} Internyx. All rights reserved.
+        </div>
       </footer>
     </div>
   );

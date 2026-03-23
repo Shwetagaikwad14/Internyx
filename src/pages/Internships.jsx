@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import "./Internships.css";
 import Navbar from "../components/Navbar";
 
@@ -257,23 +258,50 @@ export default function Internships() {
         </div>
       )}
 
-      <footer className="footer-simple">
-        <div className="footer-content">
-          <div className="footer-left">
-            <span className="icon-wrap">⚲</span> 9206 123455 Internyx
-            <div className="footer-links">
-              <span>Quick Links</span>
-              <span>Home</span>
-              <span>Internships</span>
-              <span>Contact</span>
+      <footer className="footer">
+        <div className="footer-grid">
+          <div>
+            <h4>Quick Links</h4>
+            <p>About Us</p>
+            <p>Internships</p>
+            <p>Projects</p>
+            <p>Contact Us</p>
+          </div>
+
+          <div>
+            <h4>Resources</h4>
+            <p>Blog</p>
+            <p>FAQs</p>
+            <p>Support</p>
+          </div>
+
+          <div>
+            <h4>Contact Us</h4>
+            <p>info@internyx.com</p>
+            <p>+123 456 7890</p>
+          </div>
+
+          <div>
+            <h4>Social Media</h4>
+            <div className="social-icons">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                <FaFacebookF />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                <FaTwitter />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                <FaLinkedinIn />
+              </a>
             </div>
           </div>
-          <div className="footer-social">
-            <span>🐦</span>
-            <span>in</span>
-            <span>f</span>
-            <span>📷</span>
-          </div>
+        </div>
+
+        <div className="footer-bottom">
+          © {currentYear} Internyx. All rights reserved.
         </div>
       </footer>
     </div>

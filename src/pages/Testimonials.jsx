@@ -1,4 +1,5 @@
 import React from "react";
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./Testimonials.css";
 import Navbar from "../components/Navbar";
@@ -28,6 +29,7 @@ const testimonialsData = [
 ];
 
 export default function Testimonials() {
+  const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
 
   const renderStars = (rating) => {
@@ -82,7 +84,6 @@ export default function Testimonials() {
                 {/* Card Footer */}
                 <div className="card-footer">
                   <span className="card-author">{t.name}</span>
-                  <button className="apply-btn" onClick={() => navigate('/internships')}>Apply &gt;</button>
                 </div>
               </div>
             ))}
@@ -102,24 +103,50 @@ export default function Testimonials() {
       </main>
 
       {/* Footer */}
-      <footer className="testimonials-footer">
-        <div className="footer-left">
-          <p>
-            <span className="footer-icon">✓</span> © 2026 122456 Internyx
-          </p>
-          <div className="footer-links">
-            <span>© Quick Links</span>
-            <span>Home</span>
-            <span>Internships</span>
-            <span>Contact</span>
+      <footer className="footer">
+        <div className="footer-grid">
+          <div>
+            <h4>Quick Links</h4>
+            <p>About Us</p>
+            <p>Internships</p>
+            <p>Projects</p>
+            <p>Contact Us</p>
+          </div>
+
+          <div>
+            <h4>Resources</h4>
+            <p>Blog</p>
+            <p>FAQs</p>
+            <p>Support</p>
+          </div>
+
+          <div>
+            <h4>Contact Us</h4>
+            <p>info@internyx.com</p>
+            <p>+123 456 7890</p>
+          </div>
+
+          <div>
+            <h4>Social Media</h4>
+            <div className="social-icons">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                <FaFacebookF />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                <FaTwitter />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                <FaLinkedinIn />
+              </a>
+            </div>
           </div>
         </div>
-        <div className="footer-right">
-          <div className="social-icons">
-            <span>🐦</span>
-            <span>📘</span>
-            <span>📸</span>
-          </div>
+
+        <div className="footer-bottom">
+          © {currentYear} Internyx. All rights reserved.
         </div>
       </footer>
     </div>
