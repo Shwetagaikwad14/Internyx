@@ -1,5 +1,4 @@
 import React from "react";
-import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import "./Home.css";
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/internshp.jpeg";
@@ -10,18 +9,21 @@ const liveProjects = [
     domain: "Web Development",
     duration: "2 Months",
     tech: "HTML, CSS, React",
+    posted: "2 days ago",
   },
   {
     title: "Sales Data Analysis",
     domain: "Data Science",
     duration: "1 Month",
     tech: "Python, Pandas, Excel",
+    posted: "2 days ago",
   },
   {
     title: "AI Chatbot Development",
     domain: "Artificial Intelligence",
     duration: "3 Months",
     tech: "Python, NLP",
+    posted: "2 days ago",
   },
 ];
 
@@ -31,18 +33,21 @@ const demoProjects = [
     domain: "Frontend Basics",
     level: "Beginner",
     tech: "HTML, CSS",
+    posted: "2 days ago",
   },
   {
     title: "Simple Calculator",
     domain: "JavaScript Project",
     level: "Beginner",
     tech: "JS, HTML, CSS",
+    posted: "2 days ago",
   },
   {
     title: "Task Manager App",
     domain: "App Development",
     level: "Intermediate",
     tech: "React, Firebase",
+    posted: "2 days ago",
   },
 ];
 
@@ -60,7 +65,6 @@ const testimonials = [
 ];
 
 export default function Home() {
-  const currentYear = new Date().getFullYear();
   return (
     <div className="home-page">
       <Navbar showLinks={true} />
@@ -105,15 +109,26 @@ export default function Home() {
           <div className="cards-grid">
             {liveProjects.map((project, index) => (
               <div className="project-card" key={index}>
-                <h3>{project.title}</h3>
+                <div className="card-top-row">
+                  <h3>{project.title}</h3>
+                  <button className="save-btn">
+                    <FaRegBookmark />
+                  </button>
+                </div>
+
                 <ul>
                   <li>{project.domain}</li>
                   <li>Duration: {project.duration}</li>
                   <li>{project.tech}</li>
                 </ul>
-                <div className="card-buttons">
-                  <button className="blue-btn">View Details</button>
-                  <button className="yellow-btn">Apply</button>
+
+                <div className="card-footer-row">
+                  <span className="posted-time">{project.posted}</span>
+
+                  <div className="card-buttons">
+                    <button className="blue-btn">View Details</button>
+                    <button className="yellow-btn">Apply</button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -129,15 +144,26 @@ export default function Home() {
           <div className="cards-grid">
             {demoProjects.map((project, index) => (
               <div className="project-card" key={index}>
-                <h3>{project.title}</h3>
+                <div className="card-top-row">
+                  <h3>{project.title}</h3>
+                  <button className="save-btn">
+                    <FaRegBookmark />
+                  </button>
+                </div>
+
                 <ul>
                   <li>{project.domain}</li>
                   <li>Level: {project.level}</li>
                   <li>{project.tech}</li>
                 </ul>
-                <div className="card-buttons">
-                  <button className="blue-btn">View Demo</button>
-                  <button className="blue-btn alt-btn">Download</button>
+
+                <div className="card-footer-row">
+                  <span className="posted-time">{project.posted}</span>
+
+                  <div className="card-buttons">
+                    <button className="blue-btn">View Demo</button>
+                    <button className="blue-btn alt-btn">Download</button>
+                  </div>
                 </div>
               </div>
             ))}
