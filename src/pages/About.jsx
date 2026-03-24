@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./About.css";
 import Navbar from "../components/Navbar";
 import aboutHeroImg from "../assets/about_hero_illustration.png";
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 
 // You can replace these with actual team member photos if available
 const teamMembers = [
@@ -24,6 +25,7 @@ const teamMembers = [
 
 export default function About() {
   const [status, setStatus] = useState("");
+  const currentYear = new Date().getFullYear();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -120,7 +122,7 @@ export default function About() {
                 </li>
                 <li>
                   <span className="contact-icon">📞</span>
-                  Phone: +91 9876543210
+                  Phone: +91 1234567890
                 </li>
                 <li>
                   <span className="contact-icon">📍</span>
@@ -153,14 +155,50 @@ export default function About() {
       </main>
 
       {/* Footer */}
-      <footer className="about-footer">
-        <div className="footer-content">
-          <p>© 2026 Internyx | Home | Internships | Live Projects | Contact</p>
-          <div className="social-links">
-            <span className="social-icon insta">📸</span>
-            <span className="social-icon linkedIn">📘</span>
-            <span className="social-icon twitter">🐦</span>
+     <footer className="footer">
+        <div className="footer-grid">
+          <div>
+            <h4>Quick Links</h4>
+            <p>About Us</p>
+            <p>Internships</p>
+            <p>Projects</p>
+            <p>Contact Us</p>
           </div>
+
+          <div>
+            <h4>Resources</h4>
+            <p>Blog</p>
+            <p>FAQs</p>
+            <p>Support</p>
+          </div>
+
+          <div>
+            <h4>Contact Us</h4>
+            <p>info@internyx.com</p>
+            <p>+123 456 7890</p>
+          </div>
+
+          <div>
+            <h4>Social Media</h4>
+            <div className="social-icons">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                <FaFacebookF />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                <FaTwitter />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                <FaLinkedinIn />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          © {currentYear} Internyx. All rights reserved.
         </div>
       </footer>
     </div>

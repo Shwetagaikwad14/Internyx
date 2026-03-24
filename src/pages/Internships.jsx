@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 import "./Internships.css";
 import Navbar from "../components/Navbar";
 
@@ -154,7 +155,7 @@ const studentTestimonials = [
     name: "Riya K.",
     image: "https://randomuser.me/api/portraits/women/68.jpg",
     text: "Internyx helped me secure a marketing internship at a great company. The mentors there helped me improve my social media projects.",
-  }
+  },
 ];
 
 export default function Internships() {
@@ -173,7 +174,9 @@ export default function Internships() {
     window.scrollTo(0, 0);
   };
 
-  const filteredInternships = internshipsData.filter(job => job.category === activeTab);
+  const filteredInternships = internshipsData.filter(
+    (job) => job.category === activeTab
+  );
 
   const currentYear = new Date().getFullYear();
 
@@ -186,10 +189,11 @@ export default function Internships() {
           <div className="explore-header-bg">
             <div className="explore-header-content">
               <h1>Explore Internship Opportunities</h1>
+
               <div className="internship-tabs">
                 {tabs.map((tab) => (
-                  <button 
-                    key={tab} 
+                  <button
+                    key={tab}
                     className={`tab ${activeTab === tab ? "active" : ""}`}
                     onClick={() => setActiveTab(tab)}
                   >
@@ -208,9 +212,14 @@ export default function Internships() {
 
             <h2 className="section-title">
               {activeTab.includes("Internships") ? (
-                <>{activeTab.replace("Internships", "").trim()} <span>Internships</span></>
+                <>
+                  {activeTab.replace("Internships", "").trim()}{" "}
+                  <span>Internships</span>
+                </>
               ) : (
-                <>{activeTab} <span>Internships</span></>
+                <>
+                  {activeTab} <span>Internships</span>
+                </>
               )}
             </h2>
 
@@ -220,22 +229,31 @@ export default function Internships() {
                   <div className="internship-card" key={job.id}>
                     <div className="card-top">
                       <div className="card-logo-container">
-                        <div className="company-logo" style={{ backgroundColor: job.iconBg }}>
+                        <div
+                          className="company-logo"
+                          style={{ backgroundColor: job.iconBg }}
+                        >
                           {job.icon}
                         </div>
+
                         <div className="card-header-text">
                           <h3>{job.title}</h3>
                           <p className="company-name">{job.company}</p>
                         </div>
                       </div>
+
                       <span className="duration-badge">{job.duration}</span>
                     </div>
+
                     <p className="card-desc">{job.desc}</p>
+
                     <div className="card-duration-info">
                       📅 Duration: {job.duration}
                     </div>
+
                     <div className="card-bottom">
                       <span className="pay-info">⏱ {job.pay}</span>
+
                       <div className="card-action-buttons">
                         <button className="apply-btn-blue" onClick={() => handleViewDetails(job)}>View Details &gt;</button>
                         <button className="apply-btn-yellow" onClick={handleApplyClick}>Apply &gt;</button>
@@ -244,11 +262,16 @@ export default function Internships() {
                   </div>
                 ))
               ) : (
-                <p style={{ color: "#7a869a" }}>No internships available in this category.</p>
+                <p style={{ color: "#7a869a" }}>
+                  No internships available in this category.
+                </p>
               )}
             </div>
 
-            <h2 className="section-title testimonials-title">Student Testimonials</h2>
+            <h2 className="section-title testimonials-title">
+              Student Testimonials
+            </h2>
+
             <div className="testimonials-grid">
               {studentTestimonials.map((t, idx) => (
                 <div className="testi-card" key={idx}>
@@ -259,10 +282,17 @@ export default function Internships() {
                     </div>
                     <div className="stars">★★★★★</div>
                   </div>
+
                   <p className="testi-text">{t.text}</p>
+
                   <div className="testi-bottom">
                     <span className="testi-name">{t.name}</span>
-                    <button className="testi-apply-btn" onClick={handleApplyClick}>Apply &gt;</button>
+                    <button
+                      className="testi-apply-btn"
+                      onClick={handleApplyClick}
+                    >
+                      Apply &gt;
+                    </button>
                   </div>
                 </div>
               ))}
@@ -436,23 +466,50 @@ export default function Internships() {
         </div>
       )}
 
-      <footer className="footer-simple">
-        <div className="footer-content">
-          <div className="footer-left">
-            <span className="icon-wrap">⚲</span> 9206 123455 Internyx
-            <div className="footer-links">
-              <span>Quick Links</span>
-              <span>Home</span>
-              <span>Internships</span>
-              <span>Contact</span>
+      <footer className="footer">
+        <div className="footer-grid">
+          <div>
+            <h4>Quick Links</h4>
+            <p>About Us</p>
+            <p>Internships</p>
+            <p>Projects</p>
+            <p>Contact Us</p>
+          </div>
+
+          <div>
+            <h4>Resources</h4>
+            <p>Blog</p>
+            <p>FAQs</p>
+            <p>Support</p>
+          </div>
+
+          <div>
+            <h4>Contact Us</h4>
+            <p>info@internyx.com</p>
+            <p>+123 456 7890</p>
+          </div>
+
+          <div>
+            <h4>Social Media</h4>
+            <div className="social-icons">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                <FaFacebookF />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                <FaTwitter />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                <FaLinkedinIn />
+              </a>
             </div>
           </div>
-          <div className="footer-social">
-            <span>🐦</span>
-            <span>in</span>
-            <span>f</span>
-            <span>📷</span>
-          </div>
+        </div>
+
+        <div className="footer-bottom">
+          © {currentYear} Internyx. All rights reserved.
         </div>
       </footer>
     </div>
