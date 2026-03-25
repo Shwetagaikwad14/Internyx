@@ -538,6 +538,87 @@
 .modal-close-btn:hover { background: rgba(0,0,0,0.1); color: #1f2d5c; }
 .modal-form-container { margin-bottom: 0; max-width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
 
+/* --- Success Modal --- */
+.success-modal-content {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.success-icon-circle {
+  width: 80px;
+  height: 80px;
+  background-color: #eaf8f0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.success-title {
+  font-size: 24px;
+  color: #3b4b76;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.success-desc {
+  font-size: 15px;
+  color: #7a869a;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.success-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.btn-dashboard {
+  background-color: #f59e0b;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%;
+}
+
+.btn-dashboard:hover {
+  opacity: 0.9;
+}
+
+.btn-browse {
+  background-color: white;
+  color: #3b4b76;
+  border: 1px solid #e2e8f0;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+
+.btn-browse:hover {
+  background-color: #f8fafc;
+}
+
 /* --- Details View --- */
 .details-view {
   max-width: 1000px;
