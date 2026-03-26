@@ -163,8 +163,11 @@ export default function Internships() {
   const [activeTab, setActiveTab] = useState("IT Internships");
   const [selectedJob, setSelectedJob] = useState(null);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [fileName, setFileName] = useState("No file chosen");
 
   const handleApplyClick = () => {
+    setFileName("No file chosen");
     setIsApplyModalOpen(true);
   };
 
@@ -378,24 +381,8 @@ export default function Internships() {
                 <div className="summary-item">
                   <div className="summary-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a869a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
                   <div className="summary-info">
-                    <span className="summary-label">Stipend</span>
+                    <span className="summary-label">Fees</span>
                     <span className="summary-val">{selectedJob.stipend || "Unpaid"}</span>
-                  </div>
-                </div>
-
-                <div className="summary-item">
-                  <div className="summary-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a869a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
-                  <div className="summary-info">
-                    <span className="summary-label">Start Date</span>
-                    <span className="summary-val">{selectedJob.startDate || "Immediately"}</span>
-                  </div>
-                </div>
-
-                <div className="summary-item">
-                  <div className="summary-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7a869a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
-                  <div className="summary-info">
-                    <span className="summary-label">Openings</span>
-                    <span className="summary-val">{selectedJob.openings || "1 Position"}</span>
                   </div>
                 </div>
 
@@ -407,12 +394,16 @@ export default function Internships() {
       )}
 
       {isApplyModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay" onClick={() => setIsApplyModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close-btn" onClick={() => setIsApplyModalOpen(false)}>×</button>
             <div className="apply-form-container modal-form-container">
               <h2>Apply for Internship</h2>
-              <form className="apply-form" onSubmit={(e) => { e.preventDefault(); alert("Application Submitted!"); setIsApplyModalOpen(false); }}>
+              <form className="apply-form" onSubmit={(e) => { 
+                e.preventDefault(); 
+                setIsApplyModalOpen(false); 
+                setIsSuccessModalOpen(true); 
+              }}>
                 <div className="form-group">
                   <label>Student Name</label>
                   <input type="text" placeholder="" required />
@@ -454,13 +445,42 @@ export default function Internships() {
                   <div className="file-upload">
                     <label className="choose-file-btn">
                       Choose File
-                      <input type="file" required className="hidden-file-input" />
+                      <input 
+                        type="file" 
+                        required 
+                        className="hidden-file-input" 
+                        onChange={(e) => setFileName(e.target.files[0]?.name || "No file chosen")}
+                      />
                     </label>
-                    <span className="file-text">No file chosen</span>
+                    <span 
+                      className="file-text" 
+                      style={{ color: fileName !== "No file chosen" ? "#3b4b76" : "#cbd5e1" }}
+                    >
+                      {fileName}
+                    </span>
                   </div>
                 </div>
                 <button type="submit" className="submit-application-btn">Submit Application</button>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isSuccessModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsSuccessModalOpen(false)}>
+          <div className="success-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={() => setIsSuccessModalOpen(false)}>×</button>
+            <div className="success-icon-circle">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h2 className="success-title">Application Submitted!</h2>
+            <p className="success-desc">
+              Your application for {selectedJob?.title || "Internship"} <br /> at {selectedJob?.company || "the company"} has been successfully sent. <br /> You can track its status in your dashboard.
+            </p>
+            <div className="success-buttons">
+              <button className="btn-dashboard" onClick={() => setIsSuccessModalOpen(false)}>Go to Dashboard</button>
+              <button className="btn-browse" onClick={() => { setIsSuccessModalOpen(false); setView("explore"); }}>Browse More Internships</button>
             </div>
           </div>
         </div>

@@ -10,6 +10,31 @@ import "./Home.css";
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/internshp.jpeg";
 
+
+const liveProjects = [
+  {
+    title: "E-Commerce Website",
+    domain: "Web Development",
+    duration: "2 Months",
+    tech: "HTML, CSS, React",
+    posted: "2 days ago",
+  },
+  {
+    title: "Sales Data Analysis",
+    domain: "Data Science",
+    duration: "1 Month",
+    tech: "Python, Pandas, Excel",
+    posted: "2 days ago",
+  },
+  {
+    title: "AI Chatbot Development",
+    domain: "Artificial Intelligence",
+    duration: "3 Months",
+    tech: "Python, NLP",
+    posted: "2 days ago",
+  },
+];
+
 const demoProjects = [
   {
     title: "Portfolio Website",
