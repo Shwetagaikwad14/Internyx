@@ -1,5 +1,11 @@
 import React from "react";
-import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn, FaRegBookmark } from "react-icons/fa";
+import { 
+  FaFacebookF, 
+  FaInstagram, 
+  FaTwitter, 
+  FaLinkedinIn, 
+  FaRegBookmark 
+} from "react-icons/fa";
 import "./Home.css";
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/internshp.jpeg";
@@ -53,6 +59,30 @@ const demoProjects = [
   },
 ];
 
+const liveProjects = [
+  {
+    title: "E-Commerce Website",
+    domain: "Web Development",
+    duration: "2 Months",
+    tech: "HTML, CSS, React",
+    posted: "2 days ago",
+  },
+  {
+    title: "Sales Data Analysis",
+    domain: "Data Science",
+    duration: "1 Month",
+    tech: "Python, Pandas, Excel",
+    posted: "2 days ago",
+  },
+  {
+    title: "AI Chatbot Development",
+    domain: "Artificial Intelligence",
+    duration: "3 Months",
+    tech: "Python, NLP",
+    posted: "2 days ago",
+  },
+];
+
 const testimonials = [
   {
     name: "Priya M.",
@@ -73,11 +103,12 @@ export default function Home() {
     <div className="home-page">
       <Navbar showLinks={true} />
 
+      {/* HERO */}
       <section className="hero-section">
         <div className="hero-left">
           <h1>Launch Your Career with Top Internships</h1>
           <p>
-            Find the Best Internship Opportunities &amp; Work on Live Projects.
+            Find the Best Internship Opportunities & Work on Live Projects.
           </p>
 
           <div className="search-bar">
@@ -99,48 +130,15 @@ export default function Home() {
         </div>
 
         <div className="hero-right">
-          <img src={heroImg} alt="Internship illustration" />
+          <img src={heroImg} alt="Internship" />
         </div>
       </section>
 
       <div className="wave-shape"></div>
 
+      {/* PROJECTS */}
       <section className="projects-section">
-        <div className="projects-column">
-          <h2>📚 Live Projects</h2>
-          <p className="section-subtitle">Work on Real Industry Projects</p>
-
-          <div className="cards-grid">
-            {liveProjects.map((project, index) => (
-              <div className="project-card" key={index}>
-                <div className="card-top-row">
-                  <h3>{project.title}</h3>
-                  <button className="save-btn">
-                    <FaRegBookmark />
-                  </button>
-                </div>
-
-                <ul>
-                  <li>{project.domain}</li>
-                  <li>Duration: {project.duration}</li>
-                  <li>{project.tech}</li>
-                </ul>
-
-                <div className="card-footer-row">
-                  <span className="posted-time">{project.posted}</span>
-
-                  <div className="card-buttons">
-                    <button className="blue-btn">View Details</button>
-                    <button className="yellow-btn">Apply</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="projects-divider"></div>
-
+        {/* DEMO */}
         <div className="projects-column">
           <h2>📘 Demo Projects</h2>
           <p className="section-subtitle">Practice Projects for Beginners</p>
@@ -148,12 +146,11 @@ export default function Home() {
           <div className="cards-grid">
             {demoProjects.map((project, index) => (
               <div className="project-card" key={index}>
-                <div className="card-top-row">
-                  <h3>{project.title}</h3>
-                  <button className="save-btn">
-                    <FaRegBookmark />
-                  </button>
-                </div>
+                <button className="save-btn">
+                  <FaRegBookmark />
+                </button>
+
+                <h3 className="project-title">{project.title}</h3>
 
                 <ul>
                   <li>{project.domain}</li>
@@ -173,8 +170,46 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        <div className="projects-divider"></div>
+
+        {/* LIVE */}
+        <div className="projects-column">
+          <h2>📚 Live Projects</h2>
+          <p className="section-subtitle">
+            Work on Real Industry Projects
+          </p>
+
+          <div className="cards-grid">
+            {liveProjects.map((project, index) => (
+              <div className="project-card" key={index}>
+                <button className="save-btn">
+                  <FaRegBookmark />
+                </button>
+
+                <h3 className="project-title">{project.title}</h3>
+
+                <ul>
+                  <li>{project.domain}</li>
+                  <li>Duration: {project.duration}</li>
+                  <li>{project.tech}</li>
+                </ul>
+
+                <div className="card-footer-row">
+                  <span className="posted-time">{project.posted}</span>
+
+                  <div className="card-buttons">
+                    <button className="blue-btn">View Details</button>
+                    <button className="yellow-btn">Apply</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
+      {/* STORIES */}
       <section className="stories-section">
         <h2>📁 Success Stories</h2>
         <p>Hear from Our Successful Interns</p>
@@ -192,52 +227,52 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="footer">
-        <div className="footer-grid">
-          <div>
-            <h4>Quick Links</h4>
-            <p>About Us</p>
-            <p>Internships</p>
-            <p>Projects</p>
-            <p>Contact Us</p>
-          </div>
-
-          <div>
-            <h4>Resources</h4>
-            <p>Blog</p>
-            <p>FAQs</p>
-            <p>Support</p>
-          </div>
-
-          <div>
-            <h4>Contact Us</h4>
-            <p>info@internyx.com</p>
-            <p>+123 456 7890</p>
-          </div>
-
-          <div>
-            <h4>Social Media</h4>
-            <div className="social-icons">
-              <a href="https://facebook.com" target="_blank" rel="noreferrer">
-                <FaFacebookF />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                <FaInstagram />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer">
-                <FaTwitter />
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-                <FaLinkedinIn />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          © {currentYear} Internyx. All rights reserved.
-        </div>
-      </footer>
+      {/* FOOTER */}
+       <footer className="footer">
+             <div className="footer-grid">
+               <div>
+                 <h4>Quick Links</h4>
+                 <p>About Us</p>
+                 <p>Internships</p>
+              
+               </div>
+     
+               <div>
+                 <h4>Resources</h4>
+                 <p>Blog</p>
+                 <p>FAQs</p>
+                 <p>Support</p>
+               </div>
+     
+               <div>
+                 <h4>Contact Us</h4>
+                 <p>info@internyx.com</p>
+                 <p>+123 456 7890</p>
+               </div>
+     
+               <div>
+                 <h4>Social Media</h4>
+                 <div className="social-icons">
+                   <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                     <FaFacebookF />
+                   </a>
+                   <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                     <FaInstagram />
+                   </a>
+                   <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                     <FaTwitter />
+                   </a>
+                   <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                     <FaLinkedinIn />
+                   </a>
+                 </div>
+               </div>
+             </div>
+     
+             <div className="footer-bottom">
+               © {currentYear} Internyx. All rights reserved.
+             </div>
+           </footer>
     </div>
   );
 }
