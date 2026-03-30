@@ -8,7 +8,7 @@ import Testimonials from "./pages/Testimonials";
 import AdminLogin from "./pages/admin-login/AdminLogin";
 import Internships from "./pages/Internships";
 import Profile from "./pages/Profile";
-
+import SavedInternships from "./pages/SavedInternships";
 
 export default function App() {
   return (
@@ -16,6 +16,7 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/saved-internships" element={<SavedInternships />} />
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/register" element={<Register />} />
       <Route path="/about" element={<About />} />

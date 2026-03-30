@@ -5,9 +5,16 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
 }
 
 .home-page {
@@ -16,6 +23,11 @@ html, body {
   color: #1f2d5c;
   width: 100%;
   overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.home-page::-webkit-scrollbar {
+  display: none;
 }
 
 /* ================= HERO ================= */
@@ -49,7 +61,8 @@ html, body {
   font-size: 18px;
   line-height: 1.6;
 }
-/* SEARCH BAR - FULL HORIZONTAL FIX */
+
+/* SEARCH BAR */
 .search-bar {
   display: flex;
   align-items: center;
@@ -63,11 +76,10 @@ html, body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-/* INPUT + SELECT SAME SIZE */
 .search-bar input,
 .search-bar select {
   flex: 1;
-  min-width: 140px;   /* 🔥 prevents breaking */
+  min-width: 140px;
   padding: 12px 14px;
   border: none;
   outline: none;
@@ -76,7 +88,6 @@ html, body {
   font-size: 14px;
 }
 
-/* BUTTON FIXED SIZE */
 .search-bar button {
   flex: 0 0 auto;
   padding: 12px 22px;
@@ -86,7 +97,7 @@ html, body {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  white-space: nowrap; /* 🔥 prevents text wrap */
+  white-space: nowrap;
 }
 
 .search-bar button:hover {
@@ -126,8 +137,7 @@ html, body {
 }
 
 .projects-divider {
-  width: 2px;
-  background: #d9e2f7;
+  display: none;
 }
 
 /* GRID */
@@ -159,21 +169,49 @@ html, body {
 
 /* BOOKMARK */
 .save-btn {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: #eef4ff;
-  border: none;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #243b6b;
 }
 
-.save-btn:hover {
+.save-btn.saved {
   background: #1f6bff;
   color: white;
+}
+
+.save-toast {
+  position: fixed;
+  top: 95px;
+  right: 25px;
+  background: #16a34a;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 /* LIST */
@@ -194,14 +232,15 @@ html, body {
   align-items: center;
   margin-top: 15px;
   gap: 10px;
-  flex-wrap: wrap; /* important for alignment */
+  flex-wrap: wrap;
 }
 
 .posted-time {
   font-size: 13px;
-  color: #111827; /* more dark */
+  color: #111827;
   font-weight: 600;
 }
+
 /* BUTTONS */
 .card-buttons {
   display: flex;
@@ -263,7 +302,7 @@ html, body {
   background: white;
   padding: 18px;
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .testimonial-card img {
@@ -309,14 +348,11 @@ html, body {
 .social-icons svg {
   background: white;
   color: #2f6bff;
-  padding: 10px;
+  padding: 8px;
   border-radius: 50%;
-  font-size: 16px;
+  font-size: 18px;
   width: 36px;
   height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .social-icons svg:hover {
@@ -327,7 +363,7 @@ html, body {
 .footer-bottom {
   text-align: center;
   margin-top: 20px;
-  border-top: 1px solid rgba(255,255,255,0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
   padding-top: 12px;
 }
 
@@ -394,10 +430,6 @@ html, body {
     flex-direction: column;
     gap: 40px;
     padding: 40px 25px;
-  }
-
-  .projects-divider {
-    display: none;
   }
 
   .cards-grid {

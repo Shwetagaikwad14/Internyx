@@ -1,15 +1,15 @@
-import React from "react";
-import { 
-  FaFacebookF, 
-  FaInstagram, 
-  FaTwitter, 
-  FaLinkedinIn, 
-  FaRegBookmark 
+import React, { useEffect, useState } from "react";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaLinkedinIn,
+  FaRegBookmark,
+  FaBookmark,
 } from "react-icons/fa";
 import "./Home.css";
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/internshp.jpeg";
-
 
 const liveProjects = [
   {
@@ -18,6 +18,7 @@ const liveProjects = [
     duration: "2 Months",
     tech: "HTML, CSS, React",
     posted: "2 days ago",
+    type: "Live Project",
   },
   {
     title: "Sales Data Analysis",
@@ -25,6 +26,7 @@ const liveProjects = [
     duration: "1 Month",
     tech: "Python, Pandas, Excel",
     posted: "2 days ago",
+    type: "Live Project",
   },
   {
     title: "AI Chatbot Development",
@@ -32,6 +34,7 @@ const liveProjects = [
     duration: "3 Months",
     tech: "Python, NLP",
     posted: "2 days ago",
+    type: "Live Project",
   },
 ];
 
@@ -42,6 +45,7 @@ const demoProjects = [
     level: "Beginner",
     tech: "HTML, CSS",
     posted: "2 days ago",
+    type: "Demo Project",
   },
   {
     title: "Simple Calculator",
@@ -49,6 +53,7 @@ const demoProjects = [
     level: "Beginner",
     tech: "JS, HTML, CSS",
     posted: "2 days ago",
+    type: "Demo Project",
   },
   {
     title: "Task Manager App",
@@ -56,30 +61,7 @@ const demoProjects = [
     level: "Intermediate",
     tech: "React, Firebase",
     posted: "2 days ago",
-  },
-];
-
-const liveProjects = [
-  {
-    title: "E-Commerce Website",
-    domain: "Web Development",
-    duration: "2 Months",
-    tech: "HTML, CSS, React",
-    posted: "2 days ago",
-  },
-  {
-    title: "Sales Data Analysis",
-    domain: "Data Science",
-    duration: "1 Month",
-    tech: "Python, Pandas, Excel",
-    posted: "2 days ago",
-  },
-  {
-    title: "AI Chatbot Development",
-    domain: "Artificial Intelligence",
-    duration: "3 Months",
-    tech: "Python, NLP",
-    posted: "2 days ago",
+    type: "Demo Project",
   },
 ];
 
@@ -98,10 +80,42 @@ const testimonials = [
 
 export default function Home() {
   const currentYear = new Date().getFullYear();
+  const [savedTitles, setSavedTitles] = useState([]);
+  const [toastMessage, setToastMessage] = useState("");
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("savedInternships")) || [];
+    setSavedTitles(stored.map((item) => item.title));
+  }, []);
+
+  const showToast = (message) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage("");
+    }, 2000);
+  };
+
+  const handleSaveProject = (project) => {
+    const stored = JSON.parse(localStorage.getItem("savedInternships")) || [];
+
+    const alreadySaved = stored.some((item) => item.title === project.title);
+
+    if (alreadySaved) {
+      showToast("Already saved");
+      return;
+    }
+
+    const updatedSaved = [...stored, project];
+    localStorage.setItem("savedInternships", JSON.stringify(updatedSaved));
+    setSavedTitles(updatedSaved.map((item) => item.title));
+    showToast("Project saved successfully ✅");
+  };
 
   return (
     <div className="home-page">
       <Navbar showLinks={true} />
+
+      {toastMessage && <div className="save-toast">{toastMessage}</div>}
 
       {/* HERO */}
       <section className="hero-section">
@@ -144,30 +158,38 @@ export default function Home() {
           <p className="section-subtitle">Practice Projects for Beginners</p>
 
           <div className="cards-grid">
-            {demoProjects.map((project, index) => (
-              <div className="project-card" key={index}>
-                <button className="save-btn">
-                  <FaRegBookmark />
-                </button>
+            {demoProjects.map((project, index) => {
+              const isSaved = savedTitles.includes(project.title);
 
-                <h3 className="project-title">{project.title}</h3>
+              return (
+                <div className="project-card" key={index}>
+                  <button
+                    className={`save-btn ${isSaved ? "saved" : ""}`}
+                    onClick={() => handleSaveProject(project)}
+                    type="button"
+                  >
+                    {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                  </button>
 
-                <ul>
-                  <li>{project.domain}</li>
-                  <li>Level: {project.level}</li>
-                  <li>{project.tech}</li>
-                </ul>
+                  <h3 className="project-title">{project.title}</h3>
 
-                <div className="card-footer-row">
-                  <span className="posted-time">{project.posted}</span>
+                  <ul>
+                    <li>{project.domain}</li>
+                    <li>Level: {project.level}</li>
+                    <li>{project.tech}</li>
+                  </ul>
 
-                  <div className="card-buttons">
-                    <button className="blue-btn">View Demo</button>
-                    <button className="blue-btn alt-btn">Download</button>
+                  <div className="card-footer-row">
+                    <span className="posted-time">{project.posted}</span>
+
+                    <div className="card-buttons">
+                      <button className="blue-btn">View Demo</button>
+                      <button className="blue-btn alt-btn">Download</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -176,35 +198,41 @@ export default function Home() {
         {/* LIVE */}
         <div className="projects-column">
           <h2>📚 Live Projects</h2>
-          <p className="section-subtitle">
-            Work on Real Industry Projects
-          </p>
+          <p className="section-subtitle">Work on Real Industry Projects</p>
 
           <div className="cards-grid">
-            {liveProjects.map((project, index) => (
-              <div className="project-card" key={index}>
-                <button className="save-btn">
-                  <FaRegBookmark />
-                </button>
+            {liveProjects.map((project, index) => {
+              const isSaved = savedTitles.includes(project.title);
 
-                <h3 className="project-title">{project.title}</h3>
+              return (
+                <div className="project-card" key={index}>
+                  <button
+                    className={`save-btn ${isSaved ? "saved" : ""}`}
+                    onClick={() => handleSaveProject(project)}
+                    type="button"
+                  >
+                    {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                  </button>
 
-                <ul>
-                  <li>{project.domain}</li>
-                  <li>Duration: {project.duration}</li>
-                  <li>{project.tech}</li>
-                </ul>
+                  <h3 className="project-title">{project.title}</h3>
 
-                <div className="card-footer-row">
-                  <span className="posted-time">{project.posted}</span>
+                  <ul>
+                    <li>{project.domain}</li>
+                    <li>Duration: {project.duration}</li>
+                    <li>{project.tech}</li>
+                  </ul>
 
-                  <div className="card-buttons">
-                    <button className="blue-btn">View Details</button>
-                    <button className="yellow-btn">Apply</button>
+                  <div className="card-footer-row">
+                    <span className="posted-time">{project.posted}</span>
+
+                    <div className="card-buttons">
+                      <button className="blue-btn">View Details</button>
+                      <button className="yellow-btn">Apply</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -228,51 +256,50 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-       <footer className="footer">
-             <div className="footer-grid">
-               <div>
-                 <h4>Quick Links</h4>
-                 <p>About Us</p>
-                 <p>Internships</p>
-              
-               </div>
-     
-               <div>
-                 <h4>Resources</h4>
-                 <p>Blog</p>
-                 <p>FAQs</p>
-                 <p>Support</p>
-               </div>
-     
-               <div>
-                 <h4>Contact Us</h4>
-                 <p>info@internyx.com</p>
-                 <p>+123 456 7890</p>
-               </div>
-     
-               <div>
-                 <h4>Social Media</h4>
-                 <div className="social-icons">
-                   <a href="https://facebook.com" target="_blank" rel="noreferrer">
-                     <FaFacebookF />
-                   </a>
-                   <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                     <FaInstagram />
-                   </a>
-                   <a href="https://twitter.com" target="_blank" rel="noreferrer">
-                     <FaTwitter />
-                   </a>
-                   <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-                     <FaLinkedinIn />
-                   </a>
-                 </div>
-               </div>
-             </div>
-     
-             <div className="footer-bottom">
-               © {currentYear} Internyx. All rights reserved.
-             </div>
-           </footer>
+      <footer className="footer">
+        <div className="footer-grid">
+          <div>
+            <h4>Quick Links</h4>
+            <p>About Us</p>
+            <p>Internships</p>
+          </div>
+
+          <div>
+            <h4>Resources</h4>
+            <p>Blog</p>
+            <p>FAQs</p>
+            <p>Support</p>
+          </div>
+
+          <div>
+            <h4>Contact Us</h4>
+            <p>info@internyx.com</p>
+            <p>+123 456 7890</p>
+          </div>
+
+          <div>
+            <h4>Social Media</h4>
+            <div className="social-icons">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer">
+                <FaFacebookF />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                <FaInstagram />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                <FaTwitter />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                <FaLinkedinIn />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          © {currentYear} Internyx. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 }
