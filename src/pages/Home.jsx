@@ -1,5 +1,12 @@
-import React from "react";
-import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn, FaRegBookmark } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaLinkedinIn,
+  FaRegBookmark,
+  FaBookmark,
+} from "react-icons/fa";
 import "./Home.css";
 import Navbar from "../components/Navbar";
 import heroImg from "../assets/internshp.jpeg";
@@ -12,6 +19,7 @@ const liveProjects = [
     duration: "2 Months",
     tech: "HTML, CSS, React",
     posted: "2 days ago",
+    type: "Live Project",
   },
   {
     title: "Sales Data Analysis",
@@ -19,6 +27,7 @@ const liveProjects = [
     duration: "1 Month",
     tech: "Python, Pandas, Excel",
     posted: "2 days ago",
+    type: "Live Project",
   },
   {
     title: "AI Chatbot Development",
@@ -26,6 +35,7 @@ const liveProjects = [
     duration: "3 Months",
     tech: "Python, NLP",
     posted: "2 days ago",
+    type: "Live Project",
   },
 ];
 
@@ -36,6 +46,7 @@ const demoProjects = [
     level: "Beginner",
     tech: "HTML, CSS",
     posted: "2 days ago",
+    type: "Demo Project",
   },
   {
     title: "Simple Calculator",
@@ -43,6 +54,7 @@ const demoProjects = [
     level: "Beginner",
     tech: "JS, HTML, CSS",
     posted: "2 days ago",
+    type: "Demo Project",
   },
   {
     title: "Task Manager App",
@@ -50,6 +62,7 @@ const demoProjects = [
     level: "Intermediate",
     tech: "React, Firebase",
     posted: "2 days ago",
+    type: "Demo Project",
   },
 ];
 
@@ -68,16 +81,18 @@ const testimonials = [
 
 export default function Home() {
   const currentYear = new Date().getFullYear();
-
   return (
     <div className="home-page">
       <Navbar showLinks={true} />
 
+      {toastMessage && <div className="save-toast">{toastMessage}</div>}
+
+      {/* HERO */}
       <section className="hero-section">
         <div className="hero-left">
           <h1>Launch Your Career with Top Internships</h1>
           <p>
-            Find the Best Internship Opportunities &amp; Work on Live Projects.
+            Find the Best Internship Opportunities & Work on Live Projects.
           </p>
 
           <div className="search-bar">
@@ -99,82 +114,100 @@ export default function Home() {
         </div>
 
         <div className="hero-right">
-          <img src={heroImg} alt="Internship illustration" />
+          <img src={heroImg} alt="Internship" />
         </div>
       </section>
 
       <div className="wave-shape"></div>
 
+      {/* PROJECTS */}
       <section className="projects-section">
-        <div className="projects-column">
-          <h2>📚 Live Projects</h2>
-          <p className="section-subtitle">Work on Real Industry Projects</p>
-
-          <div className="cards-grid">
-            {liveProjects.map((project, index) => (
-              <div className="project-card" key={index}>
-                <div className="card-top-row">
-                  <h3>{project.title}</h3>
-                  <button className="save-btn">
-                    <FaRegBookmark />
-                  </button>
-                </div>
-
-                <ul>
-                  <li>{project.domain}</li>
-                  <li>Duration: {project.duration}</li>
-                  <li>{project.tech}</li>
-                </ul>
-
-                <div className="card-footer-row">
-                  <span className="posted-time">{project.posted}</span>
-
-                  <div className="card-buttons">
-                    <button className="blue-btn">View Details</button>
-                    <button className="yellow-btn">Apply</button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="projects-divider"></div>
-
+        {/* DEMO */}
         <div className="projects-column">
           <h2>📘 Demo Projects</h2>
           <p className="section-subtitle">Practice Projects for Beginners</p>
 
           <div className="cards-grid">
-            {demoProjects.map((project, index) => (
-              <div className="project-card" key={index}>
-                <div className="card-top-row">
-                  <h3>{project.title}</h3>
-                  <button className="save-btn">
-                    <FaRegBookmark />
+            {demoProjects.map((project, index) => {
+              const isSaved = savedTitles.includes(project.title);
+
+              return (
+                <div className="project-card" key={index}>
+                  <button
+                    className={`save-btn ${isSaved ? "saved" : ""}`}
+                    onClick={() => handleSaveProject(project)}
+                    type="button"
+                  >
+                    {isSaved ? <FaBookmark /> : <FaRegBookmark />}
                   </button>
-                </div>
 
-                <ul>
-                  <li>{project.domain}</li>
-                  <li>Level: {project.level}</li>
-                  <li>{project.tech}</li>
-                </ul>
+                  <h3 className="project-title">{project.title}</h3>
 
-                <div className="card-footer-row">
-                  <span className="posted-time">{project.posted}</span>
+                  <ul>
+                    <li>{project.domain}</li>
+                    <li>Level: {project.level}</li>
+                    <li>{project.tech}</li>
+                  </ul>
 
-                  <div className="card-buttons">
-                    <button className="blue-btn">View Demo</button>
-                    <button className="blue-btn alt-btn">Download</button>
+                  <div className="card-footer-row">
+                    <span className="posted-time">{project.posted}</span>
+
+                    <div className="card-buttons">
+                      <button className="blue-btn">View Demo</button>
+                      <button className="blue-btn alt-btn">Download</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="projects-divider"></div>
+
+        {/* LIVE */}
+        <div className="projects-column">
+          <h2>📚 Live Projects</h2>
+          <p className="section-subtitle">Work on Real Industry Projects</p>
+
+          <div className="cards-grid">
+            {liveProjects.map((project, index) => {
+              const isSaved = savedTitles.includes(project.title);
+
+              return (
+                <div className="project-card" key={index}>
+                  <button
+                    className={`save-btn ${isSaved ? "saved" : ""}`}
+                    onClick={() => handleSaveProject(project)}
+                    type="button"
+                  >
+                    {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                  </button>
+
+                  <h3 className="project-title">{project.title}</h3>
+
+                  <ul>
+                    <li>{project.domain}</li>
+                    <li>Duration: {project.duration}</li>
+                    <li>{project.tech}</li>
+                  </ul>
+
+                  <div className="card-footer-row">
+                    <span className="posted-time">{project.posted}</span>
+
+                    <div className="card-buttons">
+                      <button className="blue-btn">View Details</button>
+                      <button className="yellow-btn">Apply</button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
+      {/* STORIES */}
       <section className="stories-section">
         <h2>📁 Success Stories</h2>
         <p>Hear from Our Successful Interns</p>
@@ -192,14 +225,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer className="footer">
         <div className="footer-grid">
           <div>
             <h4>Quick Links</h4>
             <p>About Us</p>
             <p>Internships</p>
-            <p>Projects</p>
-            <p>Contact Us</p>
           </div>
 
           <div>
