@@ -1,0 +1,8 @@
+﻿commit d503b1f4086da291add1a24d04f8b7e5e55f8a38
+Merge: 8a530f4 4d9cccd
+Author: Sumit-salunke-bot <sumosalunke1@gmail.com>
+Date:   Mon Mar 30 14:57:55 2026 +0530
+
+    Merge branch 'main' of https://github.com/Shwetagaikwad14/Internyx into sumit-work
+
+src/pages/Home.jsx

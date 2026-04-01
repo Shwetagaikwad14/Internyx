@@ -3,7 +3,7 @@ import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/f
 import "./Internships.css";
 import Navbar from "../components/Navbar";
 
-const tabs = ["IT Internships", "Marketing", "HR Internships", "Business Development"];
+const tabs = ["All", "IT Internships", "Marketing", "HR Internships", "Business Development"];
 
 const internshipsData = [
   {
@@ -140,34 +140,20 @@ const internshipsData = [
   }
 ];
 
-const studentTestimonials = [
-  {
-    name: "Priya M.",
-    image: "https://randomuser.me/api/portraits/women/44.jpg",
-    text: "Internyx connected me to an amazing web development internship where I built real projects and gained real world experience.",
-  },
-  {
-    name: "Ankit S.",
-    image: "https://randomuser.me/api/portraits/men/32.jpg",
-    text: "Thanks to internxy. I landed a data science internship that taught me a lot and definitely set me on a fast track for my career!",
-  },
-  {
-    name: "Riya K.",
-    image: "https://randomuser.me/api/portraits/women/68.jpg",
-    text: "Internyx helped me secure a marketing internship at a great company. The mentors there helped me improve my social media projects.",
-  },
-];
+
 
 export default function Internships() {
   const [view, setView] = useState("explore");
-  const [activeTab, setActiveTab] = useState("IT Internships");
+  const [activeTab, setActiveTab] = useState("All");
   const [selectedJob, setSelectedJob] = useState(null);
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const [fileName, setFileName] = useState("No file chosen");
+  const [fileData, setFileData] = useState(null);
 
   const handleApplyClick = () => {
     setFileName("No file chosen");
+    setFileData(null);
     setIsApplyModalOpen(true);
   };
 
@@ -177,8 +163,42 @@ export default function Internships() {
     window.scrollTo(0, 0);
   };
 
+  const handleApplicationSubmit = (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const applicantDetails = {
+      studentName: formData.get("studentName"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      college: formData.get("college"),
+      domain: formData.get("domain"),
+      resume: fileName,
+      resumeData: fileData
+    };
+
+    const newApplication = {
+      id: Date.now().toString(),
+      jobId: selectedJob?.id,
+      title: selectedJob?.title,
+      company: selectedJob?.company,
+      duration: selectedJob?.duration,
+      stipend: selectedJob?.stipend,
+      category: selectedJob?.category,
+      appliedDate: new Date().toLocaleDateString(),
+      status: "Pending",
+      applicantDetails
+    };
+
+    const existingApplications = JSON.parse(localStorage.getItem("appliedInternships") || "[]");
+    localStorage.setItem("appliedInternships", JSON.stringify([...existingApplications, newApplication]));
+
+    setIsApplyModalOpen(false);
+    setIsSuccessModalOpen(true);
+  };
+
   const filteredInternships = internshipsData.filter(
-    (job) => job.category === activeTab
+    (job) => activeTab === "All" || job.category === activeTab
   );
 
   const currentYear = new Date().getFullYear();
@@ -271,35 +291,7 @@ export default function Internships() {
               )}
             </div>
 
-            <h2 className="section-title testimonials-title">
-              Student Testimonials
-            </h2>
 
-            <div className="testimonials-grid">
-              {studentTestimonials.map((t, idx) => (
-                <div className="testi-card" key={idx}>
-                  <div className="testi-header">
-                    <img src={t.image} alt={t.name} />
-                    <div>
-                      <h4>{t.name}</h4>
-                    </div>
-                    <div className="stars">★★★★★</div>
-                  </div>
-
-                  <p className="testi-text">{t.text}</p>
-
-                  <div className="testi-bottom">
-                    <span className="testi-name">{t.name}</span>
-                    <button
-                      className="testi-apply-btn"
-                      onClick={handleApplyClick}
-                    >
-                      Apply &gt;
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       )}
@@ -399,24 +391,21 @@ export default function Internships() {
             <button className="modal-close-btn" onClick={() => setIsApplyModalOpen(false)}>×</button>
             <div className="apply-form-container modal-form-container">
               <h2>Apply for Internship</h2>
-              <form className="apply-form" onSubmit={(e) => { 
-                e.preventDefault(); 
-                setIsApplyModalOpen(false); 
-                setIsSuccessModalOpen(true); 
-              }}>
+              <form className="apply-form" onSubmit={handleApplicationSubmit}>
                 <div className="form-group">
                   <label>Student Name</label>
-                  <input type="text" placeholder="" required />
+                  <input type="text" name="studentName" placeholder="" required />
                 </div>
                 <div className="form-row">
                   <div className="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="" required />
+                    <input type="email" name="email" placeholder="" required />
                   </div>
                   <div className="form-group">
                     <label>Phone Number</label>
                     <input 
                       type="tel" 
+                      name="phone"
                       placeholder="e.g. 9876543210" 
                       pattern="[0-9]{10}" 
                       title="Please enter a valid 10-digit phone number" 
@@ -428,11 +417,11 @@ export default function Internships() {
                 </div>
                 <div className="form-group">
                   <label>College Name</label>
-                  <input type="text" placeholder="" required />
+                  <input type="text" name="college" placeholder="" required />
                 </div>
                 <div className="form-group">
                   <label>Internship Domain</label>
-                  <select required className="custom-select" defaultValue="">
+                  <select name="domain" required className="custom-select" defaultValue="">
                     <option value="" disabled hidden>Select Domain</option>
                     <option value="it">IT</option>
                     <option value="marketing">Marketing</option>
@@ -449,7 +438,18 @@ export default function Internships() {
                         type="file" 
                         required 
                         className="hidden-file-input" 
-                        onChange={(e) => setFileName(e.target.files[0]?.name || "No file chosen")}
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          if (file) {
+                            setFileName(file.name);
+                            const reader = new FileReader();
+                            reader.onload = (event) => setFileData(event.target.result);
+                            reader.readAsDataURL(file);
+                          } else {
+                            setFileName("No file chosen");
+                            setFileData(null);
+                          }
+                        }}
                       />
                     </label>
                     <span 

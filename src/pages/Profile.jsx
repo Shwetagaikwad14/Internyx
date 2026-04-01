@@ -6,13 +6,13 @@ import "./Profile.css";
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [resumeData, setResumeData] = useState(null);
+  const [resumeFileName, setResumeFileName] = useState("");
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState( {
     name: "",
     email: "",
     mobile: "",
-    college: "ABC Engineering College",
-    skills: "HTML, CSS, JavaScript, React",
   });
 
   useEffect(() => {
@@ -23,9 +23,14 @@ export default function Profile() {
         name: data.name || "",
         email: data.email || "",
         mobile: data.mobile || "",
-        college: data.college || "ABC Engineering College",
-        skills: data.skills || "HTML, CSS, JavaScript, React",
       });
+    }
+
+    const applications = JSON.parse(localStorage.getItem("appliedInternships") || "[]");
+    const latestAppWithResume = applications.reverse().find(app => app.applicantDetails && app.applicantDetails.resumeData);
+    if (latestAppWithResume) {
+      setResumeData(latestAppWithResume.applicantDetails.resumeData);
+      setResumeFileName(latestAppWithResume.applicantDetails.resume);
     }
   }, []);
 
@@ -39,8 +44,7 @@ export default function Profile() {
       name: formData.name,
       email: formData.email,
       mobile: formData.mobile,
-      college: formData.college,
-      skills: formData.skills,
+
     };
 
     localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -54,10 +58,21 @@ export default function Profile() {
       name: user.name || "",
       email: user.email || "",
       mobile: user.mobile || "",
-      college: user.college || "ABC Engineering College",
-      skills: user.skills || "HTML, CSS, JavaScript, React",
     });
     setIsEditing(false);
+  };
+
+  const handleViewResume = () => {
+    if (resumeData) {
+      const link = document.createElement("a");
+      link.href = resumeData;
+      link.download = resumeFileName || "Resume";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert("No resume found. Please apply for an internship to upload a resume.");
+    }
   };
 
   if (!user) {
@@ -140,12 +155,6 @@ export default function Profile() {
                 <p>
                   <b>Mobile:</b> {formData.mobile}
                 </p>
-                <p>
-                  <b>College:</b> {formData.college}
-                </p>
-                <p>
-                  <b>Skills:</b> {formData.skills}
-                </p>
               </>
             ) : (
               <div className="edit-form">
@@ -172,33 +181,19 @@ export default function Profile() {
                   value={formData.mobile}
                   onChange={handleChange}
                 />
-
-                <label>College</label>
-                <input
-                  type="text"
-                  name="college"
-                  value={formData.college}
-                  onChange={handleChange}
-                />
-
-                <label>Skills</label>
-                <input
-                  type="text"
-                  name="skills"
-                  value={formData.skills}
-                  onChange={handleChange}
-                />
               </div>
             )}
           </div>
 
           <div className="card">
             <h3>Resume</h3>
-            <button type="button" className="resume-btn">
-              Upload Resume
-            </button>
-            <button type="button" className="resume-btn">
-              View Resume
+            {resumeFileName && (
+              <p style={{ marginBottom: "15px", color: "#7a869a", fontSize: "14px" }}>
+                <b>Uploaded File:</b> {resumeFileName}
+              </p>
+            )}
+            <button type="button" className="resume-btn" onClick={handleViewResume}>
+              View / Download Resume
             </button>
           </div>
         </div>

@@ -9,6 +9,7 @@ import AdminLogin from "./pages/admin-login/AdminLogin";
 import Internships from "./pages/Internships";
 import Profile from "./pages/Profile";
 import SavedInternships from "./pages/SavedInternships";
+import MyApplications from "./pages/MyApplications";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/applications" element={<MyApplications />} />
       <Route path="/saved-internships" element={<SavedInternships />} />
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/register" element={<Register />} />

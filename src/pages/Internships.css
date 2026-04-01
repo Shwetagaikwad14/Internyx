@@ -104,11 +104,7 @@
   color: #3b7ced;
 }
 
-.testimonials-title {
-  margin-top: 50px;
-  font-weight: 700;
-  color: #3b4b76;
-}
+
 
 /* Internships Grid */
 .internships-grid {
@@ -232,83 +228,7 @@
   opacity: 0.95;
 }
 
-/* Testimonials Grid */
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
 
-.testi-card {
-  background: white;
-  border: 1px solid #edf2f7;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
-  display: flex;
-  flex-direction: column;
-}
-
-.testi-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-  position: relative;
-}
-
-.testi-header img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.testi-header h4 {
-  font-size: 16px;
-  color: #3b4b76;
-}
-
-.stars {
-  color: #f59e0b;
-  font-size: 14px;
-  margin-left: auto;
-}
-
-.testi-text {
-  font-size: 14px;
-  color: #7a869a;
-  line-height: 1.5;
-  margin-bottom: 20px;
-  flex-grow: 1;
-}
-
-.testi-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-}
-
-.testi-name {
-  font-size: 14px;
-  color: #7a869a;
-}
-
-.testi-apply-btn {
-  background: #e9f0fe;
-  color: #3b7ced;
-  border: none;
-  padding: 6px 16px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.testi-apply-btn:hover {
-  background: #d4e2fc;
-}
 
 /* Apply View */
 .apply-view {
@@ -708,9 +628,6 @@
 /* Responsive Patterns */
 @media (max-width: 800px) {
   .internships-grid {
-    grid-template-columns: 1fr;
-  }
-  .testimonials-grid {
     grid-template-columns: 1fr;
   }
   .form-row {

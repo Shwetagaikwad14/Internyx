@@ -69,12 +69,12 @@ const testimonials = [
   {
     name: "Priya M.",
     text: '"This internship gave me hands-on experience in web development!"',
-    img: "https://randomuser.me/api/portraits/women/44.jpg",
+    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?fit=crop&w=150&h=150&crop=faces&q=80", 
   },
   {
     name: "Ankit S.",
     text: '"I gained valuable skills and landed my dream job!"',
-    img: "https://randomuser.me/api/portraits/men/32.jpg",
+    img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?fit=crop&w=150&h=150&crop=faces&q=80", 
   },
 ];
 
@@ -82,6 +82,9 @@ export default function Home() {
   const currentYear = new Date().getFullYear();
   const [savedTitles, setSavedTitles] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("savedInternships")) || [];
@@ -101,7 +104,10 @@ export default function Home() {
     const alreadySaved = stored.some((item) => item.title === project.title);
 
     if (alreadySaved) {
-      showToast("Already saved");
+      const updatedSaved = stored.filter((item) => item.title !== project.title);
+      localStorage.setItem("savedInternships", JSON.stringify(updatedSaved));
+      setSavedTitles(updatedSaved.map((item) => item.title));
+      showToast("Removed from saved ❌");
       return;
     }
 
@@ -110,6 +116,23 @@ export default function Home() {
     setSavedTitles(updatedSaved.map((item) => item.title));
     showToast("Project saved successfully ✅");
   };
+  const filterProjects = (projects) => {
+    return projects.filter((p) => {
+      const text = searchText.toLowerCase();
+      const matchesText =
+        !text ||
+        p.title.toLowerCase().includes(text) ||
+        p.domain.toLowerCase().includes(text) ||
+        (p.tech && p.tech.toLowerCase().includes(text));
+      const matchesCategory =
+        !selectedCategory ||
+        p.domain.toLowerCase().includes(selectedCategory.toLowerCase());
+      return matchesText && matchesCategory;
+    });
+  };
+
+  const filteredLiveProjects = filterProjects(liveProjects);
+  const filteredDemoProjects = filterProjects(demoProjects);
 
   return (
     <div className="home-page">
@@ -126,20 +149,27 @@ export default function Home() {
           </p>
 
           <div className="search-bar">
-            <input type="text" placeholder="Search Internships" />
-            <select>
-              <option>Location</option>
-              <option>Pune</option>
-              <option>Mumbai</option>
-              <option>Remote</option>
+            <input
+              type="text"
+              placeholder="Search Internships"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <select value={selectedLocation} onChange={(e) => setSelectedLocation(e.target.value)}>
+              <option value="">Location</option>
+              <option value="Pune">Pune</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Remote">Remote</option>
             </select>
-            <select>
-              <option>Category</option>
-              <option>Web Development</option>
-              <option>Data Science</option>
-              <option>Marketing</option>
+            <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+              <option value="">Category</option>
+              <option value="Web Development">Web Development</option>
+              <option value="Data Science">Data Science</option>
+              <option value="Marketing">Marketing</option>
             </select>
-            <button>Search</button>
+            <button onClick={() => { setSearchText(searchText); setSelectedCategory(selectedCategory); }}>
+              Search
+            </button>
           </div>
         </div>
 
@@ -158,9 +188,8 @@ export default function Home() {
           <p className="section-subtitle">Practice Projects for Beginners</p>
 
           <div className="cards-grid">
-            {demoProjects.map((project, index) => {
+            {filteredDemoProjects.length > 0 ? filteredDemoProjects.map((project, index) => {
               const isSaved = savedTitles.includes(project.title);
-
               return (
                 <div className="project-card" key={index}>
                   <button
@@ -183,13 +212,15 @@ export default function Home() {
                     <span className="posted-time">{project.posted}</span>
 
                     <div className="card-buttons">
-                      <button className="blue-btn">View Demo</button>
+                      <button className="blue-btn">View Details</button>
                       <button className="blue-btn alt-btn">Download</button>
                     </div>
                   </div>
                 </div>
               );
-            })}
+            }) : (
+              <p style={{ color: "#7a869a", padding: "20px 0" }}>No demo projects match your search.</p>
+            )}
           </div>
         </div>
 
@@ -201,9 +232,8 @@ export default function Home() {
           <p className="section-subtitle">Work on Real Industry Projects</p>
 
           <div className="cards-grid">
-            {liveProjects.map((project, index) => {
+            {filteredLiveProjects.length > 0 ? filteredLiveProjects.map((project, index) => {
               const isSaved = savedTitles.includes(project.title);
-
               return (
                 <div className="project-card" key={index}>
                   <button
@@ -232,7 +262,9 @@ export default function Home() {
                   </div>
                 </div>
               );
-            })}
+            }) : (
+              <p style={{ color: "#7a869a", padding: "20px 0" }}>No live projects match your search.</p>
+            )}
           </div>
         </div>
       </section>

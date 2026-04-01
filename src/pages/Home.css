@@ -169,15 +169,25 @@ body::-webkit-scrollbar {
 
 /* BOOKMARK */
 .save-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #243b6b;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
 
 .save-btn.saved {
-  background: #1f6bff;
-  color: white;
+  background: #ffffff;
+  color: rgb(225, 225, 225);
 }
 
 .save-toast {

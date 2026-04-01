@@ -10,21 +10,21 @@ const testimonialsData = [
     role: "Web Development",
     rating: 4.5,
     text: "Internyx connected me to an amazing web development internship where I built real projects and gained real-world experience.",
-    img: "https://randomuser.me/api/portraits/women/44.jpg"
+    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?fit=crop&w=150&h=150&crop=faces&q=80", 
   },
   {
     name: "Ankit S.",
     role: "Data Science",
     rating: 5,
     text: "Thanks to Internyx, I landed a data science internship that taught me a lot and definitely set me on a fast track for my career!",
-    img: "https://randomuser.me/api/portraits/men/32.jpg"
+    img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?fit=crop&w=150&h=150&crop=faces&q=80", 
   },
   {
     name: "Riya K.",
     role: "Marketing",
     rating: 5,
     text: "Internyx helped me suggest a marketing internship at a great company. The mentors there helped me improve my social media projects.",
-    img: "https://randomuser.me/api/portraits/women/68.jpg"
+    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?fit=crop&w=150&h=150&crop=faces&q=80", 
   }
 ];
 

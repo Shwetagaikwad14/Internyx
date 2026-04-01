@@ -7,19 +7,19 @@ import { FaFacebookF, FaInstagram, FaTwitter, FaLinkedinIn } from "react-icons/f
 // You can replace these with actual team member photos if available
 const teamMembers = [
   {
-    name: "John",
+    name: "Aditya",
     role: "Founder",
-    img: "https://randomuser.me/api/portraits/men/32.jpg"
+    img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?fit=crop&w=150&h=150&crop=faces&q=80",
   },
   {
     name: "Sara",
     role: "HR Manager",
-    img: "https://randomuser.me/api/portraits/women/44.jpg"
+    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?fit=crop&w=150&h=150&crop=faces&q=80",
   },
   {
-    name: "Alex",
+    name: "Karan",
     role: "Lead Developer",
-    img: "https://randomuser.me/api/portraits/men/46.jpg"
+    img: "https://images.unsplash.com/photo-1615109398623-88346a601842?fit=crop&w=150&h=150&crop=faces&q=80", 
   }
 ];
 

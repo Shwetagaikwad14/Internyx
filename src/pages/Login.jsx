@@ -147,13 +147,21 @@ export default function Login() {
     if (otp === generatedOtp) {
       alert("Login successful ✅");
 
+      const existingStr = localStorage.getItem("user");
+      let existingUser = null;
+      if (existingStr) {
+        try { existingUser = JSON.parse(existingStr); } catch(e) {}
+      }
+
       const userData = {
-        name: "Shweta S.",
+        name: existingUser?.name || "New User",
         mobile: mobile,
-        email: "shweta@email.com",
+        email: existingUser?.email || "user@example.com",
       };
 
       localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.removeItem("appliedInternships");
+      localStorage.removeItem("savedInternships");
 
       navigate("/");
     } else {
