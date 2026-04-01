@@ -19,19 +19,37 @@ export default function Register() {
     });
   };
 
+  const [errorMsg, setErrorMsg] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const userData = {
+    setErrorMsg("");
+
+    // Load existing registered users (persistent list)
+    const existingList = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+
+    // Block duplicate mobile registration
+    const alreadyExists = existingList.some((u) => u.mobile === formData.mobile);
+    if (alreadyExists) {
+      setErrorMsg("This mobile number is already registered. Please login.");
+      return;
+    }
+
+    const newUser = {
       name: formData.name,
       mobile: formData.mobile,
-      email: formData.email
+      email: formData.email,
+      password: formData.password,
     };
-    localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.removeItem("appliedInternships");
-    localStorage.removeItem("savedInternships");
-    
-    alert("Registration successful ✅");
+
+    // Save to persistent registry
+    const updatedList = [...existingList, newUser];
+    localStorage.setItem("registeredUsers", JSON.stringify(updatedList));
+
+    // Set current session (without password)
+    const sessionUser = { name: newUser.name, mobile: newUser.mobile, email: newUser.email };
+    localStorage.setItem("user", JSON.stringify(sessionUser));
+
     navigate("/login");
   };
 
@@ -56,12 +74,31 @@ export default function Register() {
             <h1>Join Us Today!</h1>
             <p>Create Your Account</p>
 
+            {errorMsg && (
+              <div className="login-error-msg">
+                <span>⚠️ {errorMsg}</span>
+                {errorMsg.includes("login") && (
+                  <a href="/login" className="login-error-link">&nbsp;Login here →</a>
+                )}
+              </div>
+            )}
+
             <form className="auth-form" onSubmit={handleSubmit}>
               <label>Full Name</label>
               <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} required />
 
                <label>Mobile No</label>
-              <input type="tel" name="mobile" placeholder="Mobile" value={formData.mobile} onChange={handleChange} required />
+              <input
+                type="tel"
+                name="mobile"
+                placeholder="Enter 10-digit mobile number"
+                value={formData.mobile}
+                maxLength={10}
+                onChange={(e) =>
+                  setFormData({ ...formData, mobile: e.target.value.replace(/\D/g, "").slice(0, 10) })
+                }
+                required
+              />
 
               <label>Email Address</label>
               <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />

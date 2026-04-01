@@ -111,8 +111,6 @@
 //   );
 // }
 
-
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -125,12 +123,23 @@ export default function Login() {
   const [otp, setOtp] = useState("");
   const [generatedOtp, setGeneratedOtp] = useState("");
   const [showOtpBox, setShowOtpBox] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleSendOtp = (e) => {
     e.preventDefault();
+    setErrorMsg("");
 
     if (mobile.length !== 10) {
-      alert("Enter valid 10-digit mobile number");
+      setErrorMsg("Please enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    // ── Check against the persistent registered users list ──
+    const registeredList = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+    const matchedUser = registeredList.find((u) => u.mobile === mobile);
+
+    if (!matchedUser) {
+      setErrorMsg("No account found with this number. Please register first.");
       return;
     }
 
@@ -143,29 +152,23 @@ export default function Login() {
 
   const handleVerifyOtp = (e) => {
     e.preventDefault();
+    setErrorMsg("");
 
     if (otp === generatedOtp) {
-      alert("Login successful ✅");
+      // Restore full profile from the persistent registry
+      const registeredList = JSON.parse(localStorage.getItem("registeredUsers")) || [];
+      const matchedUser = registeredList.find((u) => u.mobile === mobile);
 
-      const existingStr = localStorage.getItem("user");
-      let existingUser = null;
-      if (existingStr) {
-        try { existingUser = JSON.parse(existingStr); } catch(e) {}
-      }
-
-      const userData = {
-        name: existingUser?.name || "New User",
+      const sessionUser = {
+        name: matchedUser?.name || "User",
         mobile: mobile,
-        email: existingUser?.email || "user@example.com",
+        email: matchedUser?.email || "",
       };
 
-      localStorage.setItem("user", JSON.stringify(userData));
-      localStorage.removeItem("appliedInternships");
-      localStorage.removeItem("savedInternships");
-
+      localStorage.setItem("user", JSON.stringify(sessionUser));
       navigate("/");
     } else {
-      alert("Invalid OTP ❌");
+      setErrorMsg("Invalid OTP. Please try again.");
     }
   };
 
@@ -182,7 +185,6 @@ export default function Login() {
               Discover internships, live projects, and career opportunities
               in one place.
             </p>
-
             <img src={authImage} alt="Internship Illustration" />
           </div>
         </div>
@@ -193,16 +195,29 @@ export default function Login() {
             <h1>Login</h1>
             <p>Login with Mobile OTP</p>
 
+            {/* Inline error message */}
+            {errorMsg && (
+              <div className="login-error-msg">
+                <span>⚠️ {errorMsg}</span>
+                {errorMsg.includes("register") && (
+                  <Link to="/register" className="login-error-link">
+                    &nbsp;Register here →
+                  </Link>
+                )}
+              </div>
+            )}
+
             {!showOtpBox ? (
               <form className="auth-form" onSubmit={handleSendOtp}>
                 <label>Mobile Number</label>
                 <input
                   type="tel"
-                  placeholder="Enter 10-digit mobile number"
+                  placeholder="Enter registered mobile number"
                   value={mobile}
-                  onChange={(e) =>
-                    setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))
-                  }
+                  onChange={(e) => {
+                    setMobile(e.target.value.replace(/\D/g, "").slice(0, 10));
+                    setErrorMsg("");
+                  }}
                   required
                 />
 
@@ -213,16 +228,31 @@ export default function Login() {
             ) : (
               <form className="auth-form" onSubmit={handleVerifyOtp}>
                 <label>Mobile Number</label>
-                <input type="tel" value={mobile} disabled />
+                <div className="mobile-display-row">
+                  <span className="mobile-display-num">{mobile}</span>
+                  <button
+                    type="button"
+                    className="change-number-btn"
+                    onClick={() => {
+                      setShowOtpBox(false);
+                      setOtp("");
+                      setGeneratedOtp("");
+                      setErrorMsg("");
+                    }}
+                  >
+                    Change
+                  </button>
+                </div>
 
                 <label>Enter OTP</label>
                 <input
                   type="text"
                   placeholder="Enter 6-digit OTP"
                   value={otp}
-                  onChange={(e) =>
-                    setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
-                  }
+                  onChange={(e) => {
+                    setOtp(e.target.value.replace(/\D/g, "").slice(0, 6));
+                    setErrorMsg("");
+                  }}
                   required
                 />
 
@@ -237,7 +267,7 @@ export default function Login() {
             )}
 
             <div className="bottom-text">
-              Don’t have an account?{" "}
+              Don't have an account?{" "}
               <Link to="/register">Sign Up</Link>
             </div>
           </div>

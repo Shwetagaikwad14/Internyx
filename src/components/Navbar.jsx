@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-export default function Navbar({ showLinks = false }) {
+export default function Navbar({ showLinks = false, hideProfile = false }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ export default function Navbar({ showLinks = false }) {
 
       {/* RIGHT SIDE */}
       <div className="nav-right">
-        {user ? (
+        {user && !hideProfile ? (
           <>
             {/* ONLY AVATAR */}
             <Link to="/profile" className="user-profile">

@@ -463,3 +463,104 @@ body::-webkit-scrollbar {
     align-items: center;
   }
 }
+
+/* ================= LOGOUT POPUP ================= */
+.logout-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 20, 50, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: overlayFadeIn 0.25s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.logout-popup {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 36px 32px;
+  text-align: center;
+  max-width: 380px;
+  width: 90%;
+  box-shadow: 0 24px 60px rgba(83, 48, 121, 0.25);
+  animation: popupSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popupSlideUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.logout-popup-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5c46a3, #5fa0ff);
+  color: white;
+  font-size: 26px;
+  margin-bottom: 18px;
+}
+
+.logout-popup h3 {
+  font-size: 21px;
+  font-weight: 700;
+  color: #1f2d5c;
+  margin-bottom: 10px;
+}
+
+.logout-popup p {
+  font-size: 14px;
+  color: #6b7a99;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.logout-popup-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.logout-cancel-btn,
+.logout-confirm-btn {
+  flex: 1;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.logout-cancel-btn {
+  background: #f0f2f8;
+  color: #1f2d5c;
+}
+
+.logout-cancel-btn:hover {
+  background: #e2e6f5;
+  transform: translateY(-2px);
+}
+
+.logout-confirm-btn {
+  background: linear-gradient(135deg, #5c46a3, #5fa0ff);
+  color: white;
+  box-shadow: 0 6px 18px rgba(92, 70, 163, 0.35);
+}
+
+.logout-confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(92, 70, 163, 0.45);
+}

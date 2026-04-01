@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaFacebookF,
   FaInstagram,
@@ -6,6 +7,7 @@ import {
   FaLinkedinIn,
   FaRegBookmark,
   FaBookmark,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import "./Home.css";
 import Navbar from "../components/Navbar";
@@ -80,16 +82,56 @@ const testimonials = [
 
 export default function Home() {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
   const [savedTitles, setSavedTitles] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
   const [searchText, setSearchText] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [showLogoutPopup, setShowLogoutPopup] = useState(false);
+
+  // Ref to skip popstate during intentional logout navigation
+  const isLoggingOut = useRef(false);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("savedInternships")) || [];
     setSavedTitles(stored.map((item) => item.title));
   }, []);
+
+  // Intercept browser back button to show logout confirmation
+  useEffect(() => {
+    // Push a sentinel state so the first back press is caught
+    window.history.pushState({ sentinelHome: true }, "", window.location.href);
+
+    const handlePopState = (e) => {
+      // If we are intentionally logging out, let the navigation happen
+      if (isLoggingOut.current) return;
+
+      // Re-push sentinel to keep blocking back navigation
+      window.history.pushState({ sentinelHome: true }, "", window.location.href);
+      setShowLogoutPopup(true);
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const handleConfirmLogout = () => {
+    // Mark as intentional so the popstate triggered by navigate() is ignored
+    isLoggingOut.current = true;
+    // Only clear the session — keep registeredUsers intact for re-login
+    localStorage.removeItem("user");
+    localStorage.removeItem("appliedInternships");
+    localStorage.removeItem("savedInternships");
+    setShowLogoutPopup(false);
+    navigate("/login");
+  };
+
+  const handleCancelLogout = () => {
+    setShowLogoutPopup(false);
+    // Re-push sentinel so back button triggers popup again next time
+    window.history.pushState({ sentinelHome: true }, "", window.location.href);
+  };
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -136,9 +178,30 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      <Navbar showLinks={true} />
+      <Navbar showLinks={true} hideProfile={showLogoutPopup} />
 
       {toastMessage && <div className="save-toast">{toastMessage}</div>}
+
+      {/* LOGOUT CONFIRMATION POPUP */}
+      {showLogoutPopup && (
+        <div className="logout-overlay">
+          <div className="logout-popup">
+            <div className="logout-popup-icon">
+              <FaSignOutAlt />
+            </div>
+            <h3>Logout Confirmation</h3>
+            <p>Are you sure you want to logout from Internyx?</p>
+            <div className="logout-popup-actions">
+              <button className="logout-cancel-btn" onClick={handleCancelLogout}>
+                Cancel
+              </button>
+              <button className="logout-confirm-btn" onClick={handleConfirmLogout}>
+                Yes, Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* HERO */}
       <section className="hero-section">
